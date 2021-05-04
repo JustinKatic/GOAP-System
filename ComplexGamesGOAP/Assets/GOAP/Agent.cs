@@ -7,7 +7,7 @@ public class SubGoal
 {
     // Dictionary to store our goals
     public Dictionary<string, int> sGoals;
-    
+
     // Bool to store if goal should be removed after it has been achieved
     public bool remove;
     // Constructor
@@ -22,13 +22,13 @@ public class SubGoal
 [System.Serializable]
 public class Goals
 {
-    public ActionAndGoalsSO goal;
+    public string goal;
     public int goalValue;
     public bool shouldRemoveOnComplete;
     public int priority;
 }
 
-
+[ExecuteInEditMode]
 public class Agent : MonoBehaviour
 {
     // Store our list of actions
@@ -36,7 +36,7 @@ public class Agent : MonoBehaviour
     // Dictionary of subgoals
     public Dictionary<SubGoal, int> goalsDictionary = new Dictionary<SubGoal, int>();
     // Our inventory
-    public GInventory inventory = new GInventory();
+    public Inventory inventory = new Inventory();
     // Our beliefs
     public WorldStates personalState = new WorldStates();
 
@@ -61,18 +61,23 @@ public class Agent : MonoBehaviour
     bool wasCompleteActionInvoked = false;
 
 
+
+
     public virtual void Start()
     {
         Action[] acts = GetComponents<Action>();
 
         actions.Clear();
         foreach (Action a in acts)
+        {
             actions.Add(a);
+            a.actionName = a.GetType().Name;
+        }
 
         for (int i = 0; i < myGoals.Length; i++)
         {
             Goals g = myGoals[i];
-            SubGoal sg = new SubGoal(g.goal.action, g.goalValue, g.shouldRemoveOnComplete);
+            SubGoal sg = new SubGoal(g.goal, g.goalValue, g.shouldRemoveOnComplete);
             goalsDictionary.Add(sg, g.priority);
         }
     }
@@ -133,7 +138,7 @@ public class Agent : MonoBehaviour
         }
 
         actionPlan.Clear();
-        if(actionQueue != null)
+        if (actionQueue != null)
         {
             foreach (var action in actionQueue)
             {

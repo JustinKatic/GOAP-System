@@ -17,8 +17,11 @@ public class AgentDebugger : ScriptableWizard
     {
         GameObject agent = Selection.activeGameObject;
 
-        if (agent == null)
+        if (Selection.activeGameObject == null || agent.GetComponent<Agent>() == null)
             return;
+
+
+
 
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.ExpandHeight(true));
 
@@ -124,11 +127,11 @@ public class AgentDebugger : ScriptableWizard
         EditorGUILayout.LabelField("Agent Inventory: ", EditorStyles.boldLabel);
 
         EditorGUILayout.BeginVertical("box");
-        if (agent.gameObject.GetComponent<Agent>().inventory.items.Count <= 0)
+        if (agent.gameObject.GetComponent<Agent>().inventory.objectsInInventoryList.Count <= 0)
             EditorGUILayout.LabelField("Agent has no current items in inventory");
         else
         {
-            foreach (GameObject gameObject in agent.gameObject.GetComponent<Agent>().inventory.items)
+            foreach (GameObject gameObject in agent.gameObject.GetComponent<Agent>().inventory.objectsInInventoryList)
             {
                 EditorGUILayout.LabelField(gameObject.tag);
             }

@@ -8,6 +8,9 @@ public class ResourceQueue
     public string _tag;
     public string _state;
 
+
+    public ResourceQueue resourceQueue;
+
     public ResourceQueue(string tag, string stateName, WorldStates worldStates)
     {
         _tag = tag;
@@ -34,6 +37,8 @@ public class ResourceQueue
     {
         _queue.Enqueue(r);
     }
+
+
 
 
     // Remove the resource
@@ -67,27 +72,29 @@ public sealed class World
     private static Dictionary<string, ResourceQueue> resourcesDictionary = new Dictionary<string, ResourceQueue>();
 
     private static ResourceQueue Queue;
-    public static ResourceQueueSO myResourceQueues;
+
 
     //constructor only ever called once when script compiles
     static World()
     {
         //Create our worldStates
         worldStates = new WorldStates();
-
-        myResourceQueues = Resources.Load<ResourceQueueSO>("MyQueues");
-
-        for (int i = 0; i < myResourceQueues.queueList.Length; i++)
-        {
-            string s = myResourceQueues.queueList[i].ToString();
-            Queue = new ResourceQueue(s, s, worldStates);
-            resourcesDictionary.Add(s, Queue);
-        }
     }
 
     public World()
     {
 
+    }
+
+    public void AddResourceQueue(string tag,string stateName, WorldStates worldStates)
+    {
+        if (resourcesDictionary.ContainsKey(stateName))
+        {
+            Debug.Log(stateName + " already exists");
+            return;
+        }
+        Queue = new ResourceQueue(tag, stateName, worldStates);
+        resourcesDictionary.Add(stateName, Queue);
     }
 
 

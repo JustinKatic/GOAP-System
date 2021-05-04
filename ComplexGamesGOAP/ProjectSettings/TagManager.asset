@@ -4,11 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Grill
-  - Customer
   - Table
-  - GoToDoor
-  - GoToHome
+  - Home
+  - ShopRegister
+  - Food
+  - Stove
+  - FoodServeArea
   layers:
   - Default
   - TransparentFX

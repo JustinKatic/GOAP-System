@@ -5,7 +5,7 @@
 [System.Serializable]
 public class WorldState 
 {
-    public ActionAndGoalsSO action;
+    public string action;
     public int cost;
 }
 

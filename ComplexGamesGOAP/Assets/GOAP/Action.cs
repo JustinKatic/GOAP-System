@@ -29,7 +29,7 @@ public abstract class Action : MonoBehaviour
     // Dictionary of effectsOnCompletion
     public Dictionary<string, int> effectsOnCompletionDictionary;
     // Access our inventory
-    public GInventory inventory;
+    public Inventory inventory;
     //agents personalState 
     public WorldStates agentPersonalState;
 
@@ -47,14 +47,12 @@ public abstract class Action : MonoBehaviour
     private void Awake()
     {
         agent = gameObject.GetComponent<NavMeshAgent>();
-        actionName = GetType().Name;
-
         //add requiredConditions[] to the requiredConditionsDictionary.
         if (requiredConditions != null)
         {
             foreach (WorldState w in requiredConditions)
             {
-                requiredConditionsDictionary.Add(w.action.action, w.cost);
+                requiredConditionsDictionary.Add(w.action, w.cost);
             }
         }
 
@@ -63,7 +61,7 @@ public abstract class Action : MonoBehaviour
         {
             foreach (WorldState w in effectOnCompletion)
             {
-                effectsOnCompletionDictionary.Add(w.action.action, w.cost);
+                effectsOnCompletionDictionary.Add(w.action, w.cost);
             }
         }
 
