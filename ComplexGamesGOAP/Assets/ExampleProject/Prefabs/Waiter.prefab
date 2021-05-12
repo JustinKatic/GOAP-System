@@ -91,7 +91,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 8596755968983903389}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -152,7 +152,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!114 &6647093636538033160
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using GOAP;
 
 public class GoHomeAfterPayed : Action
 {
-    public TextMeshProUGUI aboveHeadText;
+
 
     public override bool OnEnter()
     {
@@ -18,7 +18,7 @@ public class GoHomeAfterPayed : Action
 
         agent.SetDestination(destination);
 
-        aboveHeadText.text = "Going Home";
+    
 
 
         return true;
@@ -41,7 +41,7 @@ public class GoHomeAfterPayed : Action
 
     public override bool OnExit()
     {
-        aboveHeadText.text = "";
+  
         Destroy(gameObject, 1);
         return true;
     }

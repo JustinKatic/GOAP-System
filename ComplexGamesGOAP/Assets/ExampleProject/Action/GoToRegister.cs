@@ -6,7 +6,7 @@ using GOAP;
 
 public class GoToRegister : Action
 {
-    public TextMeshProUGUI aboveHeadText;
+
 
     public override bool OnEnter()
     {
@@ -19,7 +19,7 @@ public class GoToRegister : Action
 
         agent.SetDestination(destination);
 
-        aboveHeadText.text = "Going To Register";
+
 
 
         return true;
@@ -42,7 +42,7 @@ public class GoToRegister : Action
 
     public override bool OnExit()
     {
-        aboveHeadText.text = "";
+
 
         agentPersonalState.ModifyState(PS.AtShop, 1);
         return true;

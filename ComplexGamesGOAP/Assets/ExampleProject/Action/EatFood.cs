@@ -6,10 +6,10 @@ using GOAP;
 
 public class EatFood : Action
 {
-    public TextMeshProUGUI aboveHeadText;
+
     public override bool OnEnter()
     {
-        aboveHeadText.text = "Waiting For Food";
+  
 
         target = inventory.FindItemWithTag(T.Table);
 
@@ -21,7 +21,7 @@ public class EatFood : Action
 
         agent.SetDestination(destination);
 
-        aboveHeadText.text = "Eating";
+  
 
         World.Instance.GetQueue(Q.CustomerWaitingForFood).RemoveResource(gameObject);
         World.Instance.GetWorldStates().ModifyState(Q.CustomerWaitingForFood, -1);
@@ -50,7 +50,7 @@ public class EatFood : Action
         World.Instance.GetQueue(Q.FreeTable).AddResource(target);
         World.Instance.GetWorldStates().ModifyState(Q.FreeTable, 1);
         inventory.RemoveItem(target);
-        aboveHeadText.text = "";
+
         inventory.RemoveItem(inventory.FindItemWithTag(T.Food));
         return true;
     }

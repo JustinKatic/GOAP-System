@@ -34,7 +34,7 @@ public class FeedCustomer : Action
 
         float distToDest = Vector3.Distance(transform.position, target.transform.position);
 
-        if (distToDest <= 2)
+        if (distToDest <= 4)
             return true;
         else
             return false;

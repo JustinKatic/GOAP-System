@@ -10,7 +10,7 @@ public class PayRegister : Action
     public IntSO money;
     public int foodCost;
 
-    public TextMeshProUGUI aboveHeadText;
+ 
 
 
     public override bool OnEnter()
@@ -24,7 +24,7 @@ public class PayRegister : Action
 
         agent.SetDestination(destination);
 
-        aboveHeadText.text = "Paying At Register";
+ 
 
 
         return true;
@@ -48,7 +48,7 @@ public class PayRegister : Action
     public override bool OnExit()
     {
         World.Instance.GetWorldStates().ModifyState(WS.CustomersInStore, -1);
-        aboveHeadText.text = "";
+
         agentPersonalState.ModifyState(PS.AtShop, -1);
         money.value += foodCost;
         return true;

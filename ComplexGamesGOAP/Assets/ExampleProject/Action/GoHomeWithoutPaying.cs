@@ -5,7 +5,6 @@ using TMPro;
 using GOAP;
 public class GoHomeWithoutPaying : Action
 {
-    public TextMeshProUGUI aboveHeadText;
 
     public override bool OnEnter()
     {
@@ -37,7 +36,6 @@ public class GoHomeWithoutPaying : Action
 
         World.Instance.GetQueue(Q.CustomerWaitingForFood).RemoveResource(gameObject);
 
-        aboveHeadText.text = "Going Home Without Paying";
 
 
         return true;
@@ -60,7 +58,6 @@ public class GoHomeWithoutPaying : Action
 
     public override bool OnExit()
     {
-        aboveHeadText.text = "";
         Destroy(gameObject, 1);
         return true;
     }
