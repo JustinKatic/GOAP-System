@@ -363,14 +363,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: GoToRegister
   costOfAction: 1
-  durationToCompleteAction: 5
   target: {fileID: 0}
+  destination: {x: 0, y: 0, z: 0}
   IsActionActive: 0
   agent: {fileID: 0}
   requiredConditions: []
-  effectOnCompletion:
+  postConditions:
   - action: Registered
-    cost: 0
+    value: 0
   aboveHeadText: {fileID: 130715405070913190}
 --- !u!114 &8758524304172208294
 MonoBehaviour:
@@ -386,16 +386,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: FindTable
   costOfAction: 1
-  durationToCompleteAction: 0
   target: {fileID: 0}
+  destination: {x: 0, y: 0, z: 0}
   IsActionActive: 0
   agent: {fileID: 0}
   requiredConditions:
   - action: Registered
-    cost: 0
-  effectOnCompletion:
+    value: 0
+  postConditions:
   - action: WaitingForFood
-    cost: 0
+    value: 0
   aboveHeadText: {fileID: 130715405070913190}
 --- !u!114 &-9042058980054997982
 MonoBehaviour:
@@ -411,16 +411,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: GoHomeAfterPayed
   costOfAction: 1
-  durationToCompleteAction: 0
   target: {fileID: 0}
+  destination: {x: 0, y: 0, z: 0}
   IsActionActive: 0
   agent: {fileID: 0}
   requiredConditions:
   - action: PayedForFood
-    cost: 0
-  effectOnCompletion:
+    value: 0
+  postConditions:
   - action: GoHomeAfterPayed
-    cost: 0
+    value: 0
   aboveHeadText: {fileID: 130715405070913190}
 --- !u!114 &-4820742168387654455
 MonoBehaviour:
@@ -436,14 +436,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: EatFood
   costOfAction: 1
-  durationToCompleteAction: 10
   target: {fileID: 0}
+  destination: {x: 0, y: 0, z: 0}
   IsActionActive: 0
   agent: {fileID: 0}
   requiredConditions: []
-  effectOnCompletion:
+  postConditions:
   - action: HasEaten
-    cost: 0
+    value: 0
   aboveHeadText: {fileID: 130715405070913190}
 --- !u!114 &-7809571426246067952
 MonoBehaviour:
@@ -459,16 +459,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: PayRegister
   costOfAction: 1
-  durationToCompleteAction: 5
   target: {fileID: 0}
+  destination: {x: 0, y: 0, z: 0}
   IsActionActive: 0
   agent: {fileID: 0}
   requiredConditions:
   - action: FinishedEating
-    cost: 0
-  effectOnCompletion:
+    value: 0
+  postConditions:
   - action: PayedForFood
-    cost: 0
+    value: 0
   money: {fileID: 11400000, guid: fa6220a2f5822e64c944838f8211b8ca, type: 2}
   foodCost: 50
   aboveHeadText: {fileID: 130715405070913190}
@@ -486,16 +486,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: GoHomeWithoutPaying
   costOfAction: 1
-  durationToCompleteAction: 0
   target: {fileID: 0}
+  destination: {x: 0, y: 0, z: 0}
   IsActionActive: 0
   agent: {fileID: 0}
   requiredConditions:
   - action: WaitedToLong
-    cost: 0
-  effectOnCompletion:
+    value: 0
+  postConditions:
   - action: GoHomeWithoutPaying
-    cost: 0
+    value: 0
   aboveHeadText: {fileID: 130715405070913190}
 --- !u!1 &8758524305221303579
 GameObject:

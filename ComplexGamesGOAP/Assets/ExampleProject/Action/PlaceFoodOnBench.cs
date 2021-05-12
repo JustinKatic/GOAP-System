@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GOAP;
 
 public class PlaceFoodOnBench : Action
 {
@@ -8,11 +9,32 @@ public class PlaceFoodOnBench : Action
     {
         //target = FreeFoodServieArea
         target = World.Instance.GetQueue(Q.FreeFoodServeArea).RemoveAndReturnResource();
+
         if (target == null)
             return false;
 
+
+        if (target != null)
+            destination = target.transform.position;
+
+        agent.SetDestination(destination);
+
         return true;
     }
+    public override void OnTick()
+    {
+    }
+
+    public override bool ConditionToExit()
+    {
+        float distToDest = Vector3.Distance(transform.position, target.transform.position);
+
+        if (distToDest <= 2)
+            return true;
+        else
+            return false;
+    }
+
 
     public override bool OnExit()
     {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using GOAP;
 
 public class FindTable : Action
 {
@@ -11,15 +12,34 @@ public class FindTable : Action
     public override bool OnEnter()
     {
         target = World.Instance.GetQueue(Q.FreeTable).RemoveAndReturnResource();
-        Debug.Log("checking for table");
         if (target == null)
             return false;
+
+        if (target != null)
+            destination = target.transform.position;
+
+        agent.SetDestination(destination);
 
         World.Instance.GetWorldStates().ModifyState(Q.FreeTable, -1);
         aboveHeadText.text = "Finding A Table";
 
 
         return true;
+    }
+
+    public override void OnTick()
+    {
+        
+    }
+
+    public override bool ConditionToExit()
+    {
+        float distToDest = Vector3.Distance(transform.position, target.transform.position);
+
+        if (distToDest <= 2)
+            return true;
+        else
+            return false;
     }
 
     public override bool OnExit()

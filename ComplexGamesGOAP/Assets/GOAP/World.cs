@@ -2,110 +2,113 @@
 using System.Linq;
 using UnityEngine;
 
-public class ResourceQueue
+namespace GOAP
 {
-    public Queue<GameObject> _queue = new Queue<GameObject>();
-    public string _tag;
-    public string _state;
-
-
-    public ResourceQueue resourceQueue;
-
-    public ResourceQueue(string tag, string stateName, WorldStates worldStates)
+    public class ResourceQueue
     {
-        _tag = tag;
-        _state = stateName;
-        if (_tag != "")
+        public Queue<GameObject> _queue = new Queue<GameObject>();
+        public string _tag;
+        public string _state;
+
+
+        public ResourceQueue resourceQueue;
+
+        public ResourceQueue(string tag, string stateName, WorldStates worldStates)
         {
-
-            GameObject[] resources = GameObject.FindGameObjectsWithTag(_tag);
-
-            foreach (GameObject gameObject in resources)
+            _tag = tag;
+            _state = stateName;
+            if (_tag != "")
             {
-                _queue.Enqueue(gameObject);
+
+                GameObject[] resources = GameObject.FindGameObjectsWithTag(_tag);
+
+                foreach (GameObject gameObject in resources)
+                {
+                    _queue.Enqueue(gameObject);
+                }
+            }
+
+            if (_state != "")
+            {
+                worldStates.ModifyState(_state, _queue.Count);
             }
         }
 
-        if (_state != "")
+        // Add the resource
+        public void AddResource(GameObject r)
         {
-            worldStates.ModifyState(_state, _queue.Count);
+            _queue.Enqueue(r);
+        }
+
+
+
+
+        // Remove the resource
+        public GameObject RemoveAndReturnResource()
+        {
+
+            if (_queue.Count == 0)
+                return null;
+
+            return _queue.Dequeue();
+        }
+
+        // Overloaded RemoveResource
+        public void RemoveResource(GameObject r)
+        {
+            // Put everything in a new queue except 'r' and copy it back to que
+            _queue = new Queue<GameObject>(_queue.Where(p => p != r));
         }
     }
 
-    // Add the resource
-    public void AddResource(GameObject r)
+
+
+    public sealed class World
     {
-        _queue.Enqueue(r);
-    }
+        public static World Instance { get; } = new World();
+
+        // Our world states
+        private static WorldStates worldStates;
+
+        // Storage for all resources
+        private static Dictionary<string, ResourceQueue> resourcesDictionary = new Dictionary<string, ResourceQueue>();
+
+        private static ResourceQueue Queue;
 
 
-
-
-    // Remove the resource
-    public GameObject RemoveAndReturnResource()
-    {
-
-        if (_queue.Count == 0)
-            return null;
-
-        return _queue.Dequeue();
-    }
-
-    // Overloaded RemoveResource
-    public void RemoveResource(GameObject r)
-    {
-        // Put everything in a new queue except 'r' and copy it back to que
-        _queue = new Queue<GameObject>(_queue.Where(p => p != r));
-    }
-}
-
-
-
-public sealed class World
-{
-    public static World Instance { get; } = new World();
-
-    // Our world states
-    private static WorldStates worldStates;
-
-    // Storage for all resources
-    private static Dictionary<string, ResourceQueue> resourcesDictionary = new Dictionary<string, ResourceQueue>();
-
-    private static ResourceQueue Queue;
-
-
-    //constructor only ever called once when script compiles
-    static World()
-    {
-        //Create our worldStates
-        worldStates = new WorldStates();
-    }
-
-    public World()
-    {
-
-    }
-
-    public void AddResourceQueue(string tag,string stateName, WorldStates worldStates)
-    {
-        if (resourcesDictionary.ContainsKey(stateName))
+        //constructor only ever called once when script compiles
+        static World()
         {
-            Debug.Log(stateName + " already exists");
-            return;
+            //Create our worldStates
+            worldStates = new WorldStates();
         }
-        Queue = new ResourceQueue(tag, stateName, worldStates);
-        resourcesDictionary.Add(stateName, Queue);
-    }
+
+        public World()
+        {
+
+        }
+
+        public void AddResourceQueue(string tag, string stateName, WorldStates worldStates)
+        {
+            if (resourcesDictionary.ContainsKey(stateName))
+            {
+                Debug.Log(stateName + " already exists");
+                return;
+            }
+            Queue = new ResourceQueue(tag, stateName, worldStates);
+            resourcesDictionary.Add(stateName, Queue);
+        }
 
 
-    public ResourceQueue GetQueue(string type)
-    {
-        return resourcesDictionary[type];
-    }
+        public ResourceQueue GetQueue(string type)
+        {
+            return resourcesDictionary[type];
+        }
 
-    //Getter for worldStates
-    public WorldStates GetWorldStates()
-    {
-        return worldStates;
+        //Getter for worldStates
+        public WorldStates GetWorldStates()
+        {
+            return worldStates;
+        }
     }
 }

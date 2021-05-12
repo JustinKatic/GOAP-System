@@ -189,16 +189,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: CookFood
   costOfAction: 1
-  durationToCompleteAction: 5
   target: {fileID: 0}
+  destination: {x: 0, y: 0, z: 0}
   IsActionActive: 0
   agent: {fileID: 0}
   requiredConditions:
   - action: FreeStove
-    cost: 0
-  effectOnCompletion:
+    value: 0
+  - action: FreeFoodServeArea
+    value: 0
+  postConditions:
   - action: CookedFood
-    cost: 0
+    value: 0
 --- !u!114 &3596728552689326254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,13 +215,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: PlaceFoodOnBench
   costOfAction: 1
-  durationToCompleteAction: 0
   target: {fileID: 0}
+  destination: {x: 0, y: 0, z: 0}
   IsActionActive: 0
   agent: {fileID: 0}
   requiredConditions:
   - action: CookedFood
-    cost: 0
-  effectOnCompletion:
+    value: 0
+  postConditions:
   - action: PrepareFood
-    cost: 0
+    value: 0

@@ -165,11 +165,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 964bfcd7d22a1c047a6e127444485291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actions: []
+  actions:
+  - {fileID: 8596755970117943610}
+  - {fileID: 8596755970117943611}
   actionPlan: []
   currentAction: {fileID: 0}
   myGoals:
   - goal: FeedCustomer
+    goalValue: 0
+    shouldRemoveOnComplete: 0
+    priority: 0
+  - goal: GetFood
     goalValue: 0
     shouldRemoveOnComplete: 0
     priority: 0
@@ -187,16 +193,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: FeedCustomer
   costOfAction: 1
-  durationToCompleteAction: 0
   target: {fileID: 0}
+  destination: {x: 0, y: 0, z: 0}
   IsActionActive: 0
   agent: {fileID: 0}
   requiredConditions:
-  - action: GetFood
-    cost: 0
-  effectOnCompletion:
+  - action: HasFood
+    value: 0
+  postConditions:
   - action: FeedCustomer
-    cost: 0
+    value: 0
 --- !u!114 &8596755970117943611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,11 +217,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: GetFood
   costOfAction: 1
-  durationToCompleteAction: 0
   target: {fileID: 0}
+  destination: {x: 0, y: 0, z: 0}
   IsActionActive: 0
   agent: {fileID: 0}
-  requiredConditions: []
-  effectOnCompletion:
+  requiredConditions:
+  - action: CustomerWaitingForFood
+    value: 0
+  postConditions:
   - action: GetFood
-    cost: 0
+    value: 0

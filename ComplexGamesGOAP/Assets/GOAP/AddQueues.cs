@@ -2,21 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Resource
+namespace GOAP
 {
-    public string TagOfQueueItem;
-    public string NameOfQueue;
-}
-
-public class AddQueues : MonoBehaviour
-{
-    public Resource[] worldResourcesToAdd;
-    private void Awake()
+    [System.Serializable]
+    public class Resource
     {
-        foreach (Resource resource in worldResourcesToAdd)
+        public string TagOfQueueItem;
+        public string NameOfQueue;
+    }
+
+    public class AddQueues : MonoBehaviour
+    {
+        public Resource[] worldResourcesToAdd;
+        private void Awake()
         {
-            World.Instance.AddResourceQueue(resource.TagOfQueueItem, resource.NameOfQueue, World.Instance.GetWorldStates());
+            foreach (Resource resource in worldResourcesToAdd)
+            {
+                World.Instance.AddResourceQueue(resource.TagOfQueueItem, resource.NameOfQueue, World.Instance.GetWorldStates());
+            }
         }
     }
 }

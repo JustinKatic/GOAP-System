@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using GOAP;
 public class Customer : Agent
 {
     public int minTimeBeforeLeave;
@@ -15,6 +15,6 @@ public class Customer : Agent
     }
     public void GoHomeEarly()
     {
-        personalState.ModifyState("WaitedToLong", 1);
+        agentPersonalState.ModifyState("WaitedToLong", 1);
     }
 }
