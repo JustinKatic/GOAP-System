@@ -69,12 +69,14 @@ namespace GOAP
             Action[] acts = GetComponents<Action>();
 
             actions.Clear();
+            //sets the action name of each action to its actionName
             foreach (Action a in acts)
             {
                 actions.Add(a);
                 a.actionName = a.GetType().Name;
             }
 
+            //add each goal to goals dictionary
             for (int i = 0; i < myGoals.Length; i++)
             {
                 Goals g = myGoals[i];
@@ -86,7 +88,7 @@ namespace GOAP
 
 
 
-        //an invoked fuction to allow the agent to be perform task for a set duration
+        //a fuction to allow the agent to complete an action
         void CompleteAction()
         {
             if (currentAction != null)
@@ -102,7 +104,6 @@ namespace GOAP
             //if there's a current action and it is still running
             if (currentAction != null && currentAction.IsActionActive)
             {
-                // Find the distance to the target
                 // Check the agent has a goal and has reached that goal
                 if (currentAction.ConditionToExit())
                 {
@@ -110,11 +111,12 @@ namespace GOAP
                     return;
                 }
 
+                //if a current action is active run its update tick
                 if (currentAction.IsActionActive == true)
                 {
                     currentAction.OnTick();
                 }
-
+                //if not action is active find a new plan
                 else
                     planner = null;
                 return;
@@ -130,9 +132,8 @@ namespace GOAP
                 //look through each goal to find one that has an achievable plan
                 foreach (KeyValuePair<SubGoal, int> sg in sortedGoals)
                 {
- 
-                    // If actionQueue is not = null then we must have a plan
                     actionQueue = planner.plan(actions, sg.Key.sGoals, agentPersonalState);
+                    // If actionQueue is not = null then we must have a plan
                     if (actionQueue != null)
                     {
                         // Set the current goal
@@ -141,6 +142,7 @@ namespace GOAP
                     }
                 }
 
+                //clears action plan list and adds the new action plan from action queue in a list so we can view the plan in debugger.
                 actionPlan.Clear();
                 if (actionQueue != null)
                 {
@@ -152,7 +154,7 @@ namespace GOAP
             }
 
 
-            // Have we an actionQueue
+            // if we have a actionQueue but the count is == 0 
             if (actionQueue != null && actionQueue.Count == 0)
             {
                 // Check if currentGoal is removable
@@ -166,11 +168,12 @@ namespace GOAP
             }
 
 
-            // Do we still have actions
+            // If there are still actions insie of actionQueue
             if (actionQueue != null && actionQueue.Count > 0)
             {
                 // Remove the top action of the queue and put it in currentAction
                 currentAction = actionQueue.Dequeue();
+                //call actions OnEnter function and check if it returns true or false.
                 if (currentAction.OnEnter())
                 {
                     // Activate the current action
@@ -178,6 +181,7 @@ namespace GOAP
                 }
                 else
                 {
+                    //empty action queue so we can find another plan.
                     actionQueue = null;
                 }
             }

@@ -39,7 +39,7 @@ namespace GOAP
             // Search through the list to see if it exists
             foreach (GameObject gameObject in objectsInInventoryList)
             {
-                // Initially set indexToRemove to 0. The first item in the List
+                //set indexToRemove to 0.
                 indexToRemove++;
                 // Have we found it?
                 if (gameObject == objToRemove)

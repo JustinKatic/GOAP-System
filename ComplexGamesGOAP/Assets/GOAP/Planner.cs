@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace GOAP
 {
-    //a node in the plan graph to be constructed
     public class Node
     {
         //the parent node this node is connected to
@@ -11,7 +9,7 @@ namespace GOAP
         //cost to get to node
         public float _cost;
         //the state  by the time the action assigned to this node is achieved
-        public Dictionary<string, int> _state;
+        public Dictionary<string, int> _stateDictionary;
         //the action of this node
         public Action _action;
 
@@ -20,24 +18,24 @@ namespace GOAP
         {
             _parentNode = parent;
             _cost = cost;
-            _state = new Dictionary<string, int>(allStates);
+            _stateDictionary = new Dictionary<string, int>(allStates);
             _action = action;
         }
 
         // Overloaded Constructor
         public Node(Node parent, float cost, Dictionary<string, int> allStates, Dictionary<string, int> personalStates, Action action)
         {
-            this._parentNode = parent;
-            this._cost = cost;
-            _state = new Dictionary<string, int>(allStates);
+            _parentNode = parent;
+            _cost = cost;
+            _stateDictionary = new Dictionary<string, int>(allStates);
 
             //as well as the world states add the agents beliefs as states that can be
             //used to match preconditions
             foreach (KeyValuePair<string, int> b in personalStates)
             {
-                if (!_state.ContainsKey(b.Key))
+                if (!_stateDictionary.ContainsKey(b.Key))
                 {
-                    _state.Add(b.Key, b.Value);
+                    _stateDictionary.Add(b.Key, b.Value);
                 }
             }
             _action = action;
@@ -48,8 +46,7 @@ namespace GOAP
     {
         public Queue<Action> plan(List<Action> actionList, Dictionary<string, int> goalDictionary, WorldStates agentPersonalStates)
         {
-           
-            //create the first node in the graph
+            //creates a list to store possible paths into
             List<Node> pathsThatReturnSuccessList = new List<Node>();
             Node start = new Node(null, 0.0f, World.Instance.GetWorldStates().GetStates(), agentPersonalStates.GetStates(), null);
 
@@ -62,29 +59,26 @@ namespace GOAP
                 return null;
             }
 
-            //of all the plans found, find the one that's cheapest to execute
+            //if all the plans found, find the one that's cheapest to execute
             //and use that
-            Node cheapest = null;
+            Node cheapestPath = null;
             foreach (Node path in pathsThatReturnSuccessList)
             {
                 //if didnt find a cheaper path cheapest path = path
-                if (cheapest == null)
+                if (cheapestPath == null)
                 {
-                    cheapest = path;
+                    cheapestPath = path;
                 }
                 //if found a cheaper path cheapest = path
-                else if (path._cost < cheapest._cost)
+                else if (path._cost < cheapestPath._cost)
                 {
-                    cheapest = path;
+                    cheapestPath = path;
                 }
             }
 
-            //set node to = the cheapest path 
-            Node cheapestPath = cheapest;
 
             //list to store our final path
             List<Action> resultingPlanList = new List<Action>();
-
 
             //insert cheapest path inside of the resulting plan list - returns null when reach end of node
             while (cheapestPath != null)
@@ -113,16 +107,16 @@ namespace GOAP
         {
             bool foundPath = false;
 
-            //with all the useable actions
+            //with all the actions
             foreach (Action action in actionsList)
             {
-                //check their preconditions
-                if (action.IsAhievableGiven(parent._state))
+                //check their requiredConditions
+                if (action.IsAhievableGiven(parent._stateDictionary))
                 {
-                    //get the state of the world if the parent node were to be executed
-                    Dictionary<string, int> currentState = new Dictionary<string, int>(parent._state);
+                    //get the state of the world if the parent node was executed
+                    Dictionary<string, int> currentState = new Dictionary<string, int>(parent._stateDictionary);
 
-                    //add the effects of this node to the nodes states to reflect what
+                    //add the postConditions of this node to the nodes stateDictionary to reflect what
                     //the world would look like if this node's action were executed
                     foreach (KeyValuePair<string, int> eff in action.postConditionsDictionary)
                     {

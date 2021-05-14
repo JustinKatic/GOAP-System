@@ -14,6 +14,8 @@ namespace GOAP
     public class AddQueues : MonoBehaviour
     {
         public Resource[] worldResourcesToAdd;
+
+        //add each resource from the inspector into the resoourceQueue
         private void Awake()
         {
             foreach (Resource resource in worldResourcesToAdd)

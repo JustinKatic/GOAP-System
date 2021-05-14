@@ -57,7 +57,7 @@ namespace GOAP
         private void Awake()
         {
             agent = gameObject.GetComponent<NavMeshAgent>();
-            //add requiredConditions[] to the requiredConditionsDictionary.
+            //add requiredConditions to the requiredConditionsDictionary.
             if (requiredConditions != null)
             {
                 foreach (WorldState w in requiredConditions)

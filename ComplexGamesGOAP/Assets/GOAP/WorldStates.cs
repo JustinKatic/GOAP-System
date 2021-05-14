@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using UnityEngine;
 
 namespace GOAP
 {
@@ -8,7 +8,9 @@ namespace GOAP
     [System.Serializable]
     public class WorldState
     {
+        [Tooltip("Name of the condition")]
         public string action;
+        [Tooltip("Value of the condition")]
         public int value;
     }
 
@@ -39,6 +41,12 @@ namespace GOAP
         private void AddState(string state, int value)
         {
             worldStatesDictionary.Add(state, value);
+        }
+
+        public void AddPersonalState(string state)
+        {
+            if (!HasState(state))
+                worldStatesDictionary.Add(state, 0);
         }
 
 
@@ -87,6 +95,5 @@ namespace GOAP
                 AddState(state, amountOfState);
             }
         }
-
     }
 }

@@ -41,8 +41,6 @@ namespace GOAP
         }
 
 
-
-
         // Remove the resource
         public GameObject RemoveAndReturnResource()
         {
@@ -53,7 +51,7 @@ namespace GOAP
             return _queue.Dequeue();
         }
 
-        // Overloaded RemoveResource
+        // RemoveResource Obj
         public void RemoveResource(GameObject r)
         {
             // Put everything in a new queue except 'r' and copy it back to que
@@ -88,6 +86,7 @@ namespace GOAP
 
         }
 
+        //Helper function to add resource to a queue and dictionary
         public void AddResourceQueue(string tag, string stateName, WorldStates worldStates)
         {
             if (resourcesDictionary.ContainsKey(stateName))
@@ -100,6 +99,7 @@ namespace GOAP
         }
 
 
+        //Helper function to get the Queue dictionary of the paramater key passed in
         public ResourceQueue GetQueue(string type)
         {
             return resourcesDictionary[type];
