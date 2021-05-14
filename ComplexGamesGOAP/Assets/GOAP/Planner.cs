@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GOAP
 {
@@ -47,6 +48,7 @@ namespace GOAP
     {
         public Queue<Action> plan(List<Action> actionList, Dictionary<string, int> goalDictionary, WorldStates agentPersonalStates)
         {
+           
             //create the first node in the graph
             List<Node> pathsThatReturnSuccessList = new List<Node>();
             Node start = new Node(null, 0.0f, World.Instance.GetWorldStates().GetStates(), agentPersonalStates.GetStates(), null);
